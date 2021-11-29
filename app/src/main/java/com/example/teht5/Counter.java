@@ -1,28 +1,48 @@
 package com.example.teht5;
 
-public class Counter {
-    private int arvo;
+import android.widget.TextView;
 
-    public Counter(){
-        this.arvo = 0;
+public class Counter extends MainActivity {
+
+    private int min;
+    private int max;
+    private int start;
+    private int step;
+    private int total;
+
+    public Counter(int min, int max, int start, int step, int total){
+        this.min = min;
+        this.max = max;
+        this.start = start;
+        this.step = step;
+        this.total = total;
+    }
+
+    public Counter() {
+        this.min = -100;
+        this.max = 100;
+        this.start = 0;
+        this.step = 1;
+        this.total = 0;
     }
 
     public void plus(){
-        if(this.arvo <= 93){
-            this.arvo = this.arvo + 1;
-        }
-    }
-    public void minus(){
-        if(this.arvo >= -93){
-            this.arvo = this.arvo - 7;
-        }
-    }
-    public void reset(){
-        this.arvo = 0;
+        total =+ step;
     }
 
-    public int getArvo(){
-        return this.arvo;
+    public void minus() {
+        total =- step;
+    }
+
+    public void reset() {
+        total = start;
+
+    }
+
+    public int getArvo() {
+
+        return total;
+
     }
 
 }

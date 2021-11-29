@@ -2,64 +2,59 @@ package com.example.teht5;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv;
-    TextView tv2;
-    TextView tv3;
+    TextView creationsView;
+    TextView hitsView;
+    TextView visiblesView;
+
+    public int creations;
+    public int visibles;
+    public int hits;
+    private Counter creationsCounter;
+    private Counter visiblesCounter;
+    private Counter hitsCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.tv = findViewById(R.id.textView);
-        this.tv2 = findViewById(R.id.textView2);
-        this.tv3 = findViewById(R.id.textView2);
+        SharedPreferences prefGet = getSharedPreferences("CounterPref", Context.MODE_PRIVATE);
 
-        updateUI();
+        visiblesCounter = new Counter(100, 0, prefGet.getInt("CreationsPref", 0), 1,0);
+        hitsCounter = new Counter(1000, 0, prefGet.getInt("CreationsPref", 0),1,0);
+        creationsCounter = new Counter(1000, 0, prefGet.getInt("CreationsPref", 0),1,0);
 
-    }
+        hits = hitsCounter.getArvo();
+        creations = creationsCounter.getArvo();
+        creationsCounter.plus();
+        visibles = visiblesCounter.getArvo();
 
-    Counter onCreate = new Counter();
-
-    public void onCreate(View v){
-        onCreate.plus();
-        updateUI();
-    }
-
-
-    Counter onStart = new Counter();
-
-    public void onStart(View v){
-        onStart.plus();
         updateUI();
     }
 
-    Counter hitMe = new Counter();
-
-    public void plusButtonPressed(View v)
-    {
-        hitMe.plus();
-        updateUI();
+    @Override
+    protected void onStart(){
+        super.onStart();
     }
 
-    public void resetButtonPressed(View v)
-    {
-        hitMe.reset();
-        onCreate.reset();
-        onStart.reset();
-        updateUI();
+    public void onPlusButtonPressed(){
+        hitsCounter.plus();
     }
-    public void updateUI()
-    {
-        tv.setText(Integer.toString(hitMe.getArvo()));
-        tv2.setText(Integer.toString(onCreate.getArvo()));
-        tv3.setText(Integer.toString(onStart.getArvo()));
+
+
+    public void updateUI() {
+        creationsView.setText(creations);
+        hitsView.setText(hits);
+        visiblesView.setText(visibles);
+
     }
 
 
